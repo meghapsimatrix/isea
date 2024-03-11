@@ -1,0 +1,166 @@
+---
+title: "COVID Titles: Topic Modeling"
+author: "Megha Joshi"
+format: html
+editor: visual
+---
+
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(stm)
+library(tm)
+library(topicmodels)
+library(wordcloud)
+library(tidytext)
+```
+
+
+Read in the data and take a random sample (just using a subset as instructed):
+
+
+```{r, warning = FALSE, message = FALSE}
+dat <- read_csv("COVIDarticletitles.csv")
+
+set.seed(030824)
+short_dat <- sample_n(dat, 1000)
+```
+
+
+## Structural Topic Modeling
+
+Preprocess the data by removing stop words, numbers, punctuation, and by stemming words:
+
+
+```{r}
+processed <- textProcessor(dat$title,
+                           metadata = dat,
+                           removestopwords = TRUE,
+                           removenumbers = FALSE,
+                           removepunctuation = TRUE,
+                           stem = TRUE)
+
+```
+
+
+Preparing documents for STM analyses:
+
+
+```{r}
+out <- prepDocuments(processed$documents,
+                     processed$vocab,
+                     processed$meta)
+
+
+docs <- out$documents
+vocab <- out$vocab
+meta <- out$meta
+```
+
+
+This code is from the stm package vignette article to see how many words are removed by setting threshold thresholds in `prepDocuments()`. Then setting the lower threshold to 10:
+
+
+```{r}
+plotRemoved(processed$documents, lower.thresh = seq(1, 200, by = 100))
+
+out <- prepDocuments(processed$documents, 
+                     processed$vocab, 
+                     processed$meta, 
+                     lower.thresh = 10)
+
+docs <- out$documents
+vocab <- out$vocab
+meta <- out$meta
+```
+
+
+First selecting k by using `searchK()` to get diagnostics for different models run using different k. I need to study more about what the different diagnostics mean:
+
+
+```{r}
+#fit stm
+set.seed(030424)
+
+#select k
+# diagnostic values with models for different k
+# just picking 3 k values to make things faster- how do choose them? 
+system.time(
+  storage <- searchK(out$documents, 
+                     out$vocab, 
+                     K = c(5, 10, 15), 
+                     data = meta, 
+                     init.type = "Spectral",
+                     verbose = FALSE)
+)
+
+
+plot(storage)
+
+```
+
+
+Fitting stm with 10 topics and plotting results to explore:
+
+
+```{r}
+mod <- stm(documents = out$documents, 
+           vocab = out$vocab, 
+           K = 10, 
+           data = out$meta, 
+           init.type = "Spectral", 
+           verbose = FALSE)
+
+summary(mod)
+```
+
+```{r}
+plot(mod, 
+     type = "summary", 
+     xlim = c(0, .4))
+```
+
+```{r}
+plot(mod, type = "labels", topics = c(8, 9, 3))
+```
+
+```{r}
+plot(mod, 
+     type="perspectives", 
+     topics = c(8, 9))
+```
+
+
+## Latent Dirichlet Allocation (LDA)
+
+Preprocess the data and create and DTM:
+
+
+```{r}
+corpus <- Corpus(VectorSource(short_dat$title))
+
+# 
+processed_corpus <- textProcessor(corpus,
+                                  metadata = dat,
+                                  removestopwords = TRUE,
+                                  removenumbers = FALSE,
+                                  stem = TRUE)
+
+# create a document-term matrix
+dtm <- DocumentTermMatrix(processed_corpus)
+inspect(dtm)
+```
+
+
+Perform LDA with the number of topics:
+
+
+```{r}
+# Perform LDA
+lda_model <- LDA(dtm, k = 10)  # k is the number of topics
+lda_model
+
+# Get the terms associated with each topic
+terms <- terms(lda_model)
+terms
+```
+
