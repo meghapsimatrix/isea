@@ -119,17 +119,29 @@ plot(mod,
 
 ## Latent Dirichlet Allocation (LDA)
 
-Preprocess the data and create and DTM:
+Trying to pre-process the data with `tidytext`
 
 ```{r}
+tidy_dat <- 
+  short_dat %>%
+  select(title) %>%
+  mutate(line = 1:1000) %>%
+  unnest_tokens(word, title) %>%
+  anti_join(stop_words)
+
+tidy_dat %>%
+  count(word, sort = TRUE) 
+```
+
+Converting short_dat into a dtm:
+
+```{r, warning = F, message = F}
 corpus <- Corpus(VectorSource(short_dat$title))
 
-# 
-processed_corpus <- textProcessor(corpus,
-                                  metadata = dat,
-                                  removestopwords = TRUE,
-                                  removenumbers = FALSE,
-                                  stem = TRUE)
+processed_corpus <- tm_map(corpus, content_transformer(tolower))
+processed_corpus <- tm_map(processed_corpus, removePunctuation)
+processed_corpus <- tm_map(processed_corpus, removeNumbers)
+processed_corpus <- tm_map(processed_corpus, removeWords, stopwords("english"))
 
 # create a document-term matrix
 dtm <- DocumentTermMatrix(processed_corpus)
@@ -143,7 +155,15 @@ Perform LDA with the number of topics:
 lda_model <- LDA(dtm, k = 10)  # k is the number of topics
 lda_model
 
-# Get the terms associated with each topic
-terms <- terms(lda_model)
+
+```
+
+The top 10 terms associated with each topic:
+
+```{r}
+
+terms <- terms(lda_model, 10)
 terms
+
+
 ```

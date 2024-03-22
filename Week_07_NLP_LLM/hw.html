@@ -186,7 +186,7 @@ Your corpus now has 5223 documents, 784 terms and 33930 tokens.</code></pre>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 97.393   1.800 118.783 </code></pre>
+101.011   2.014 123.126 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(storage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -284,68 +284,79 @@ Topic 10 Top Words:
 </section>
 <section id="latent-dirichlet-allocation-lda" class="level2">
 <h2 class="anchored" data-anchor-id="latent-dirichlet-allocation-lda">Latent Dirichlet Allocation (LDA)</h2>
-<p>Preprocess the data and create and DTM:</p>
+<p>Trying to pre-process the data with <code>tidytext</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">Corpus</span>(<span class="fu">VectorSource</span>(short_dat<span class="sc">$</span>title))</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>processed_corpus <span class="ot">&lt;-</span> <span class="fu">textProcessor</span>(corpus,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">metadata =</span> dat,</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">removestopwords =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">removenumbers =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">stem =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Building corpus... 
-Converting to Lower Case... 
-Removing punctuation... 
-Removing stopwords... 
-Stemming... </code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>tidy_dat <span class="ot">&lt;-</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  short_dat <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(title) <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">line =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, title) <span class="sc">%&gt;%</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(stop_words)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in `[&lt;-.data.frame`(`*tmp*`, , tag, value = structure(list(title =
-c("Sequence requirements for RNA strand transfer during nidovirus discontinuous
-subgenomic RNA synthesis", : replacement element 1 has 5253 rows to replace 3
-rows
-
-Warning in `[&lt;-.data.frame`(`*tmp*`, , tag, value = structure(list(title =
-c("Sequence requirements for RNA strand transfer during nidovirus discontinuous
-subgenomic RNA synthesis", : replacement element 1 has 5253 rows to replace 3
-rows
-
-Warning in `[&lt;-.data.frame`(`*tmp*`, , tag, value = structure(list(title =
-c("Sequence requirements for RNA strand transfer during nidovirus discontinuous
-subgenomic RNA synthesis", : replacement element 1 has 5253 rows to replace 3
-rows
-
-Warning in `[&lt;-.data.frame`(`*tmp*`, , tag, value = structure(list(title =
-c("Sequence requirements for RNA strand transfer during nidovirus discontinuous
-subgenomic RNA synthesis", : replacement element 1 has 5253 rows to replace 3
-rows
-
-Warning in `[&lt;-.data.frame`(`*tmp*`, , tag, value = structure(list(title =
-c("Sequence requirements for RNA strand transfer during nidovirus discontinuous
-subgenomic RNA synthesis", : replacement element 1 has 5253 rows to replace 3
-rows</code></pre>
+<pre><code>Joining with `by = join_by(word)`</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tidy_dat <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Creating Output... </code></pre>
+<pre><code># A tibble: 3,379 × 2
+   word            n
+   &lt;chr&gt;       &lt;int&gt;
+ 1 virus         199
+ 2 influenza     112
+ 3 human         106
+ 4 respiratory    99
+ 5 infection      94
+ 6 viral          79
+ 7 coronavirus    71
+ 8 protein        66
+ 9 sars           58
+10 analysis       57
+# ℹ 3,369 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a document-term matrix</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">DocumentTermMatrix</span>(processed_corpus)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(dtm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Converting short_dat into a dtm:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">Corpus</span>(<span class="fu">VectorSource</span>(short_dat<span class="sc">$</span>title))</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>processed_corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, <span class="fu">content_transformer</span>(tolower))</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>processed_corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(processed_corpus, removePunctuation)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>processed_corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(processed_corpus, removeNumbers)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>processed_corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(processed_corpus, removeWords, <span class="fu">stopwords</span>(<span class="st">"english"</span>))</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># create a document-term matrix</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">DocumentTermMatrix</span>(processed_corpus)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(dtm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;&lt;DocumentTermMatrix (documents: 4, terms: 5991)&gt;&gt;
-Non-/sparse entries: 5991/17973
-Sparsity           : 75%
-Maximal term length: 35
+<pre><code>&lt;&lt;DocumentTermMatrix (documents: 1000, terms: 3449)&gt;&gt;
+Non-/sparse entries: 9090/3439910
+Sparsity           : 100%
+Maximal term length: 34
 Weighting          : term frequency (tf)
 Sample             :
-    Terms
-Docs 10, 11, 12, 13, 14, 15, 17, 18, 21, 26,
-   1  24  18  16  12  11   8   7   9   7   6
-   2   0   0   0   0   0   0   0   0   0   0
-   3   0   0   0   0   0   0   0   0   0   0
-   4   0   0   0   0   0   0   0   0   0   0</code></pre>
+     Terms
+Docs  analysis coronavirus disease human infection influenza protein
+  233        0           0       0     0         0         0       0
+  289        0           0       0     0         1         0       0
+  303        0           0       0     0         0         1       0
+  38         0           0       0     2         0         0       0
+  529        0           0       0     0         0         0       0
+  59         0           0       1     0         0         0       0
+  612        0           0       0     0         0         0       0
+  613        0           0       0     0         1         0       0
+  685        0           0       0     0         0         0       0
+  788        0           0       0     0         0         0       0
+     Terms
+Docs  respiratory viral virus
+  233           0     0     0
+  289           0     0     0
+  303           1     1     3
+  38            0     0     0
+  529           0     1     1
+  59            0     0     0
+  612           0     0     1
+  613           1     0     0
+  685           0     0     0
+  788           0     0     0</code></pre>
 </div>
 </div>
 <p>Perform LDA with the number of topics:</p>
@@ -356,17 +367,34 @@ Docs 10, 11, 12, 13, 14, 15, 17, 18, 21, 26,
 <div class="cell-output cell-output-stdout">
 <pre><code>A LDA_VEM topic model with 10 topics.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the terms associated with each topic</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>terms <span class="ot">&lt;-</span> <span class="fu">terms</span>(lda_model)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>terms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The top 10 terms associated with each topic:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>terms <span class="ot">&lt;-</span> <span class="fu">terms</span>(lda_model, <span class="dv">10</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>terms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            Topic 1             Topic 2             Topic 3             Topic 4 
-              "10,"               "11,"   "\"progenitor\"," "\"hospital-wid\"," 
-            Topic 5             Topic 6             Topic 7             Topic 8 
-              "10,"          "\"ns5\","        "journal\","    "\"re-search\"," 
-            Topic 9            Topic 10 
-       "integer(0)"         "\"bind\"," </code></pre>
+<pre><code>      Topic 1       Topic 2       Topic 3      Topic 4       Topic 5      
+ [1,] "rna"         "cells"       "sars"       "infections"  "human"      
+ [2,] "hepatitis"   "hiv"         "care"       "viral"       "protein"    
+ [3,] "replication" "infection"   "influenza"  "respiratory" "novel"      
+ [4,] "virus"       "study"       "virus"      "children"    "cell"       
+ [5,] "middle"      "clinical"    "protein"    "china"       "receptor"   
+ [6,] "east"        "viral"       "multiple"   "study"       "type"       
+ [7,] "united"      "virus"       "risk"       "human"       "gene"       
+ [8,] "coronavirus" "case"        "infection"  "infection"   "role"       
+ [9,] "cell"        "respiratory" "viral"      "disease"     "coronavirus"
+[10,] "mouse"       "viruses"     "healthcare" "pneumonia"   "antibodies" 
+      Topic 6       Topic 7      Topic 8     Topic 9      Topic 10    
+ [1,] "respiratory" "influenza"  "virus"     "health"     "virus"     
+ [2,] "analysis"    "virus"      "dna"       "diseases"   "porcine"   
+ [3,] "virus"       "pandemic"   "detection" "disease"    "new"       
+ [4,] "syndrome"    "avian"      "human"     "infectious" "epidemic"  
+ [5,] "acute"       "human"      "two"       "public"     "infectious"
+ [6,] "coronavirus" "antibody"   "disease"   "detection"  "diarrhea"  
+ [7,] "severe"      "monoclonal" "canine"    "viruses"    "infection" 
+ [8,] "infection"   "ahn"        "infection" "approach"   "review"    
+ [9,] "fever"       "using"      "viral"     "bats"       "global"    
+[10,] "human"       "novel"      "genomes"   "vaccines"   "emerging"  </code></pre>
 </div>
 </div>
 </section>
