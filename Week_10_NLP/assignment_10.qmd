@@ -1,0 +1,14 @@
+---
+title: "Assignment 10"
+author: "Megha Joshi"
+format: pdf
+editor: visual
+---
+
+The teaching practice that I want to measure includes examining practices for teaching English language learners (EL) in a classroom. There are treatment teachers who received professional development (PD) intervention to help them better serve EL students and comparison teachers who did not receive such an intervention. I want to example the impact of the PD intervention on teacher practices.
+
+I plan to collect one hour observation from the treatment and comparison teachers implementing lessons. The observations will be recorded on video and will be transcribed. I will then preprocess the data by anonymyzing and grouping together utterances.
+
+The next step will be to annotate. Multiple expert raters will use a modified version of the [Sheltered Instruction Observation Protocol](https://www.ocmboces.org/tfiles/folder1602/Copy%20of%20SIOP%20Observation%20Form.pdf) to rate the observations (the modifications will contain items specifically tailored to teaching ELs). Raters will rate the extent to which teachers met certain criteria. As an alternative, I can also try to use Chat GPT to annotate by providing prompts with a lot of context. I will compare the annotations provided by GPT to those by expert raters.
+
+After annotating the data, I will conduct causal inference analysis (e.g., propensity score weighting followed by OLS) to examine the impacts of the treatment on teacher practices.
