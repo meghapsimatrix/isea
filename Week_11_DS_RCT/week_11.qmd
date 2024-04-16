@@ -1,0 +1,32 @@
+---
+title: "Week 11 Assignment: RCT Design"
+author: "Megha Joshi"
+format: pdf
+editor: visual
+---
+
+### Theory of Change
+
+The intervention that we want to evaluate is a teacher professional development program where teachers learn skills that they can use to help their English learner students (ELs) perform better. The professional development program will help improve teacher practices targeted at teaching ELs. The improvement in teacher practices will then lead to improvement in ELs achievement in English Language Arts and in English proficiency.
+
+### Target Population and Sample
+
+This program is designed to eventually help high school teachers and their EL students across the United States. Due to budget and practical limitations, we will only be able to examine the effectiveness of this program for teachers and their EL students in central Texas. Thus, the population of interest is teachers and students across the US but the sample consists of teachers and students from five districts districts in central Texas. We will need to examine how generalizable the results are and interpret the results with caution.
+
+### Intervention Design
+
+For the intervention we will conduct a block randomized randomized controlled trial (RCT). In each of the five districts, we will randomize half of the high schools to treatment condition and half to comparison condition. We expect around 6 to 10 high schools per district (we will attempt to recruit large districts). RCT is the gold standard for making inferences about the causal impacts of a program. Blocking by district allows to improve precision of effect estimates (given how well differences between districts explain variation in the outcomes).
+
+### Outcomes
+
+We want to measure teacher practices as teacher level outcomes and EL standardized achievement test scores and English proficiency test scores as student level outcomes. Teacher practices will be measured using video recordings of classroom lessons. We will use NLP and human expertise to annotate the observations. Achievement and proficiency will be measured through scores on state standardized tests.
+
+### Implementation
+
+The treatment teachers will receive professional development training over summer. The teachers will receive training on strategies that they can implement in their lessons to improve the way they teach EL students. We will examine fidelity of implementation. We will also survey data on teacher perceptions of the usefulness of the program and how the teachers implemented what they learned during their training.
+
+### Analytic Approach
+
+We will check attrition and other missing data. We will also check baseline equivalence on important variables like student demographics and prior achievement. Further, we will examine whether all randomized units complied with their treatment assignment.
+
+We will use causal mediation to estimate indirect effects of how the teacher professional development intervention impacted EL student achievement and proficiency by improving teacher practices aimed at helping EL students. We will use weighting based causal mediation methods to analyze the data.
