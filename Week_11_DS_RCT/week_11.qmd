@@ -7,11 +7,11 @@ editor: visual
 
 ### Theory of Change
 
-The intervention that we want to evaluate is a teacher professional development program where teachers learn skills that they can use to help their English learner students (ELs) perform better. The professional development program will help improve teacher practices targeted at teaching ELs. The improvement in teacher practices will then lead to improvement in ELs achievement in English Language Arts and in English proficiency.
+The intervention that we want to evaluate is a teacher professional development program where teachers learn skills that they can use to help their English learner students (ELs) perform better. The professional development program will help improve teacher practices targeted at teaching ELs. The improvement in teacher practices will then lead to improvement in ELs' achievement in English Language Arts and in English proficiency.
 
 ### Target Population and Sample
 
-This program is designed to eventually help high school teachers and their EL students across the United States. Due to budget and practical limitations, we will only be able to examine the effectiveness of this program for teachers and their EL students in central Texas. Thus, the population of interest is teachers and students across the US but the sample consists of teachers and students from five districts districts in central Texas. We will need to examine how generalizable the results are and interpret the results with caution.
+This program is designed to eventually help high school teachers and their EL students across the United States. Due to budget and practical limitations, we will only be able to examine the effectiveness of this program for teachers and their EL students in central Texas. Thus, the population of interest is teachers and students across the US but the sample consists of teachers and students from five districts in central Texas. We will need to examine how generalizable the results are and interpret the results with caution.
 
 ### Intervention Design
 
@@ -19,7 +19,7 @@ For the intervention we will conduct a block randomized randomized controlled tr
 
 ### Outcomes
 
-We want to measure teacher practices as teacher level outcomes and EL standardized achievement test scores and English proficiency test scores as student level outcomes. Teacher practices will be measured using video recordings of classroom lessons. We will use NLP and human expertise to annotate the observations. Achievement and proficiency will be measured through scores on state standardized tests.
+We want to measure teacher practices as the teacher-level outcome and EL standardized achievement test scores and English proficiency test scores as student-level outcomes. Teacher practices will be measured using video recordings of classroom lessons. We will use NLP and human expertise to annotate the observations. Achievement and proficiency will be measured through scores on state standardized tests.
 
 ### Implementation
 
