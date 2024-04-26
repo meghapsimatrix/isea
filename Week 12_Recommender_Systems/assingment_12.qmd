@@ -1,0 +1,16 @@
+---
+title: "Assignment 12"
+author: "Megha Joshi"
+format: pdf
+editor: visual
+---
+
+An application of recommender systems in education settings is an online learning platform that would provide tailored learning resources for students and teachers. This system would be collaborative filtering. Based on students who are similar to a student, the online platform would recommend lessons and other resources that are appropriate for their ability level and interest. The recommendations could also be based on what has worked for the student in previous lessons.
+
+It can be formulated as a machine learning problem in that we can collect data on students' abilities, past knowledge, skills, interest and use that to find students who are similar to each other and then predict what resource a students belonging to a group of similar students would pick based on the data from other students.
+
+To evaluate it in term of machine learning metrics, I would examine prediction accuracy with data that I already collected with what resources students actually preferred. I would look at accuracy, precision, recall, sensitivity, specificity. I would use a test dataset to examine these.
+
+To evaluate it in terms of non-machine learning metrics, I would maybe run an RCT. Assign half of the students to treatment condition where they receive the recommender system course for 3 months. Assign other half of students to condition where they receive non-personalized learning course where they don't get tailored recommendations for 3 months. Then I would measure metrics like student engagement, interest, satisfaction, and student achievement.
+
+The biggest challenge for me maybe is perhaps accessing data on a lot of students on broad range of characteristics like their interests, motivation etc. that may be difficult to collect. Administrative data may be easier to obtain but the kind of variables needed for this type of recommender systems to work correctly may be not as easy to access, which may make the system not as good.
