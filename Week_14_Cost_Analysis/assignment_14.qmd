@@ -1,0 +1,28 @@
+---
+title: "Assignment 14"
+author: "Megha Joshi"
+format: pdf
+editor: visual
+---
+
+1.  What is the main difference between benefit-cost analysis (BCA) and cost-effectiveness analysis (CEA)?
+
+    In cost effectiveness analysis, we compare multiple products or interventions or policies that have a common outcome measure. You look at ratio of effectiveness of program over the cost it takes to implement the program. We compare that to another program. The most cost effective program is lowest cost for given achievement or highest effect for given dollar amount.
+
+    In benefit cost analysis, we compare the effect of a treatment to the cost (benefits to cost). We then convert the educational outcome to a monetary outcome by looking at other studies. For example, we can convert 2 percentage point increase in high school graduation rate to a monetary value based on increase in earnings etc. We then take the ratio of the monetary benefits to the cost of the program.
+
+2.  What does it mean to annualize a cost estimate of a particular ingredient?
+
+    This refers to estimating the annual cost of something. For example, if intervention requires products that last multiple years like laptops, annual cost estimates the cost for it each year accounting for the fact that we it keeps it values for multiple years.
+
+3.  What does induced costs refer to?
+
+    Induced costs are any additional costs that arise from implementing the program that was not part of initial program costs/ budget.
+
+4.  What does shadow pricing refer to?
+
+    Shadow pricing is estimating the price of something when the market does not exist. For example, estimating the price of a parent volunteer required for a intervention.
+
+5.  In what ways does cost analysis improve impact evaluation?
+
+    When we do just impact evaluation, we only look at the effect of some program or policy and do not think about the cost. In practice it is important to look at what alternative programs may cost. Suppose program A has desirable effect for much lower costs compared to Program B that has higher effect than Program A but also much higher cost. In such scenario, Program A is preferable even though it may have lower effect than Program B. We cannot make such decision without incorporating cost analysis. Cost analysis also provides transparency about all the resources going into implementing a program and how much they cost and whether it is feasible and sustainable to implement the program at what scale.
